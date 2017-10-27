@@ -1,0 +1,39 @@
+li {
+    color: white;
+    text-align: center;
+    background-color: black;
+    border: solid 2px red;
+    padding: 20px;
+    width: 200px;
+}
+
+ol li {
+    display: inline-block;
+}
+
+ul {
+    position: absolute;
+    top: 80px;
+    left: 255px;
+}
+
+ul li {
+    margin-top: 2px;
+    display: none;
+}
+
+ol li:hover ul li {
+    display: block
+}
+
+li ol {
+    position: absolute;
+    left: 245px;
+    top: 128px;
+    margin-left: 2px;
+    display: none
+}
+
+ol li:hover ul li:hover ol {
+    display: block
+}
