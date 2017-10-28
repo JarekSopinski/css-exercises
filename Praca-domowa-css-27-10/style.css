@@ -37,3 +37,20 @@ li ol {
 ol li:hover ul li:hover ol {
     display: block
 }
+
+/*
+Alternatywnie - działa globalnie, bez względu na ilość gniazd
+
+ul ul {
+    display: none
+    } // wskazuje każdy ul który ma rodzica ul, czyli
+    pierwszy rząd pozostaje domyślnie wyświetlony
+
+li:hover > ul {
+    display: block
+    } //najazd na każde li, które jest bezpośrednim rodzicem
+    elementu ul
+
+    // W sytuacji kiedy są tylko ul i li,
+    a gniazda opisano za pomocą klas
+ */

@@ -1,0 +1,24 @@
+div {
+  font: Arial, Tahoma, serif;
+  color: #f00; }
+
+a {
+  color: #f00; }
+
+o {
+  border-width: 50px; }
+
+.naglowek-strony .logo {
+  color: #f00; }
+.naglowek-strony .menu {
+  font-size: 10px; }
+
+div {
+  width: 100px;
+  height: 20px;
+  background-color: red;
+  border-width: 8px;
+  color: pink;
+  border-bottom-style: dotted; }
+
+/*# sourceMappingURL=test.css.map */

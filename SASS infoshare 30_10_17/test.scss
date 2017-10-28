@@ -1,0 +1,40 @@
+$kolor-tekstu: #f00; // zmienna z kolorem tekstu
+$czcionka: Arial, Tahoma, serif; //zmienna z fontem
+
+$wysokosc-naglowka-strony: 100px;
+$wysokosc-logo: 50px;
+
+div {
+  font: $czcionka; //wprowadzenie zmiennej
+  color: $kolor-tekstu;
+}
+
+a {
+  color: $kolor-tekstu;
+}
+
+o {
+  border-width: ($wysokosc-naglowka-strony - $wysokosc-logo);
+} // odejmuje wysokość logo od wysokości nagłówka
+
+.naglowek-strony {
+  .logo {
+    color: $kolor-tekstu
+  }
+  .menu {
+    font-size: 10px
+  }
+} //przykład zagnieżdżania
+
+@mixin obramowanie($szerokosc) {
+  border-width: $szerokosc; //wprowadzanie zmiennych do mixina
+  color: pink;
+  border-bottom-style: dotted;
+} //stworzenie mixina
+
+div {
+  width: 100px;
+  height: 20px;
+  background-color: red;
+  @include obramowanie(8px); //wprowadza mixina do div
+}
