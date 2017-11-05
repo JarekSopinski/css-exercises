@@ -1,0 +1,35 @@
+.thumbnail {
+    box-sizing: border-box;
+    border: 0.5em solid #b80000;
+    background: #e90000;
+    line-height: 0em;
+    float: left;
+    width: 32.334%;
+    min-height: 5em;
+    margin: 0 0.666% 0.666% 0;
+}
+
+
+@media screen and (min-width: 800px) {
+    .thumbnail {
+        width: 24.334%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .thumbnail {
+        width: 16%;
+    }
+
+}
+
+img {
+    max-width: 100%;
+}
+
+
+
+/* implement media queries to
+    -  break after 4th thumbnail when width < 1200px
+    -  break after 3rd thumbnail when width < 800px
+*/
