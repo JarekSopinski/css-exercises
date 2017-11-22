@@ -1,2 +1,3 @@
 # css-exercises
-Improving my CSS skills
+Exercises done during InfoShare Academy front-end course.
+
