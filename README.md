@@ -16,6 +16,9 @@ Simple grid with two breakpoints, created using only pure CSS.
 ## Flowers page (05.11.2017)
 Rewritting page using Bootstrap (not finished).
 
+## JavaScript basics (25.11.2017)
+Basic JS exercises
+
 
 
 
