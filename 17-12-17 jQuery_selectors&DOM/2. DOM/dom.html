@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery - manipulacja drzewem DOM</title>
+</head>
+<style>
+    .my-hero {
+        background: lime;
+    }
+
+    .my-class {
+        color: red;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div class="row">
+        <nav>
+            <ul class="heroes-list">
+                <li class="hero disney-hero">Batman</li>
+                <li class="hero isa-hero">Thor</li>
+                <li class="hero" id="best-hero">Hulk</li>
+                <li class="hero isa-hero">Iron man</li>
+            </ul>
+        </nav>
+    </div>
+    <p id="dom-info">Dom manipulation with jQuery is easy!</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="dom-filtering.js"></script>
+<script src="dom-traversing.js"></script>
+<script src="dom-manipulation.js"></script>
+</body>
+</html>
