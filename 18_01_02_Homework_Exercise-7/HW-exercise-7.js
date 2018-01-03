@@ -175,11 +175,21 @@ const getOfficeInfo = (id) => {
     }
 };
 
-/*
-var sum = products.reduce(function(acc, next) {
-return acc + next.price;
-}, 0);
- */
+const getBestSalary = () => {
+    let bestSalary;
+    for (let i = 0; i < company.offices.length; i++) {
+        let bestSalaryByOffice = company.offices[i].workers[0].salary;
+        for (let j = 0; j < company.offices[i].workers; j++) {
+            if (company.offices[i].workers[j].salary > bestSalaryByOffice) {
+                bestSalaryByOffice = company.offices[i].workers[j].salary;
+            }
+        }
+        bestSalary = bestSalaryByOffice;
+    }
+    return bestSalary
+};
+
+getBestSalary();
 
 // ******************************Rozwiązania zadań***************************************
 
