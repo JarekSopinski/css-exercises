@@ -78,7 +78,7 @@ const workers = [
     { id: 15, name: "Magda",      type: "P", office: "KO", salary: 220 }
 ];
 
-// Funkcje użyte do zbudowania obiektu z powyższych danych:
+// Budowa obiektu z powyższych danych:
 
 const company = {};
 
@@ -100,7 +100,7 @@ const getOfficeInfo = (id) => {
             console.log('Number of workers: ' + company.offices[i].workers.length);
             // Uzupełnić średnią pensję
         }
-    };
+    }
 };
 
 const addNewOffice = (id, name, headquarter) => {
@@ -127,7 +127,29 @@ const addNewWorker = (id, name, type, office, salary) => {
     };
 };
 
-// Rozwiązania zadań:
+const getNumberOfWorkers = () => {
+    let numberOfWorkers = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        numberOfWorkers += company.offices[i].workers.length;
+    };
+    return numberOfWorkers;
+};
+
+const getTotalSalary = () => {
+    let totalSalary = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        for (let j = 0; j < company.offices[i].workers.length; j++) {
+            totalSalary += company.offices[i].workers[j].salary;
+        };
+    };
+    return totalSalary;
+};
+
+const getAverageSalary = () => {
+  return Math.round(getTotalSalary() / getNumberOfWorkers())
+};
+
+// ******************************Rozwiązania zadań***************************************
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
 
@@ -142,3 +164,11 @@ console.log(company.offices[3]);
 
 addNewWorker(16, 'Olek', 'M', 'PO', 500);
 console.log(company.offices[3].workers[0]);
+
+// 4) Wyswietl, informacje o biurze w Poznaniu
+
+getOfficeInfo('PO');
+
+// 5) Wyswietl srednia pensje w calej firmie
+
+console.log(getAverageSalary());
