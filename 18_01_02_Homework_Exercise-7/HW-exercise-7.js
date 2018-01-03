@@ -1,5 +1,5 @@
 /*
-******************Struktura obiektu Company, rozpisana dla ułatwienia pracy******************
+Struktura obiektu 'company', rozpisana dla ułatwienia pracy:
 
 Company {
     Offices [
@@ -93,16 +93,6 @@ company.offices = offices.map(office => {
 
 // Funkcje do operacji potrzebnych w kolejnych zadaniach:
 
-const getOfficeInfo = (id) => {
-    for (let i = 0; i < company.offices.length; i++) {
-        if (id === company.offices[i].id) {
-            console.log('City: ' + company.offices[i].name);
-            console.log('Number of workers: ' + company.offices[i].workers.length);
-            // Uzupełnić średnią pensję
-        }
-    }
-};
-
 const addNewOffice = (id, name, headquarter) => {
     company.offices.push({
         id: id,
@@ -124,14 +114,14 @@ const addNewWorker = (id, name, type, office, salary) => {
         if (newWorker.office === company.offices[i].id) {
             company.offices[i].workers.push(newWorker);
         }
-    };
+    }
 };
 
 const getNumberOfWorkers = () => {
     let numberOfWorkers = 0;
     for (let i = 0; i < company.offices.length; i++) {
         numberOfWorkers += company.offices[i].workers.length;
-    };
+    }
     return numberOfWorkers;
 };
 
@@ -140,14 +130,56 @@ const getTotalSalary = () => {
     for (let i = 0; i < company.offices.length; i++) {
         for (let j = 0; j < company.offices[i].workers.length; j++) {
             totalSalary += company.offices[i].workers[j].salary;
-        };
-    };
+        }
+    }
     return totalSalary;
 };
 
 const getAverageSalary = () => {
   return Math.round(getTotalSalary() / getNumberOfWorkers())
 };
+
+const getNumberOfWorkersByOffice = (id) => {
+    let numberOfWorkers = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        if (id === company.offices[i].id) {
+            numberOfWorkers = company.offices[i].workers.length;
+        }
+    }
+    return numberOfWorkers;
+};
+
+const getSalaryByOffice = (id) => {
+    let totalSalary = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        if (id === company.offices[i].id) {
+            totalSalary = company.offices[i].workers.reduce((acc, next) => {
+                return acc + next.salary;
+            }, 0);
+        }
+    }
+    return totalSalary;
+};
+
+const getAverageSalaryByOffice = (id) => {
+    return Math.round(getSalaryByOffice(id) / getNumberOfWorkersByOffice(id))
+};
+
+const getOfficeInfo = (id) => {
+    for (let i = 0; i < company.offices.length; i++) {
+        if (id === company.offices[i].id) {
+            console.log('City: ' + company.offices[i].name);
+            console.log('Number of workers: ' + company.offices[i].workers.length);
+            console.log('Average salary: ' + getAverageSalaryByOffice(id));
+        }
+    }
+};
+
+/*
+var sum = products.reduce(function(acc, next) {
+return acc + next.price;
+}, 0);
+ */
 
 // ******************************Rozwiązania zadań***************************************
 
@@ -172,3 +204,10 @@ getOfficeInfo('PO');
 // 5) Wyswietl srednia pensje w calej firmie
 
 console.log(getAverageSalary());
+
+//6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
+
+
+
+
+// 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
