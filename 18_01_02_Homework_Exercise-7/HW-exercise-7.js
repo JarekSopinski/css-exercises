@@ -1,3 +1,59 @@
+/*
+******************Struktura obiektu Company, rozpisana dla ułatwienia pracy******************
+
+Company {
+    Offices [
+            [0] {office 1
+                .name
+                .id
+                .headquarter
+                .workers
+                    [
+                        [0] {worker 1
+                            .id
+                            .name
+                            .type
+                            .office
+                            .salary
+                            }
+                        [1] {worker 2
+                            .id
+                            .name
+                            .type
+                            .office
+                            .salary
+                            }
+                     ]
+
+            [1] {office 2
+                .name
+                .id
+                .headquarter
+                .workers
+                    [
+                        [0] {worker 1
+                            .id
+                            .name
+                            .type
+                            .office
+                            .salary
+                            }
+                        [1] {worker 2
+                            .id
+                            .name
+                            .type
+                            .office
+                            .salary
+                            }
+                     ]
+
+Company { [.offices{office[.workers {worker}{worker}]}] }
+
+*/
+
+// Dane wyjściowe:
+
+
 const offices = [
     { id: "GD", name: "Gdansk", headquarter: true },
     { id: "GL", name: "Gliwice" },
@@ -22,21 +78,7 @@ const workers = [
     { id: 15, name: "Magda",      type: "P", office: "KO", salary: 220 }
 ];
 
-/*
-Firma X posiada trzy aktualnie biura zlokalizowane w Gdansku, Gliwicach i Koszalinie a w
-niedalekiej przyszlosci planuje otworzyc nowe biuro w Poznaniu.
-Wymagania aplikacji: Na podstawie dostarczonych danych, prosze stworzyc obiekt Firma.
-
-Firma powinna posiadac:
-- liste Biur (tablice)
-
-Natomiast Kazde biuro powinno posiadac liste Pracowników, id, name, oraz informacje czy jest
-glówna siedziba.
-Kazdy pracownik ma propercje office, która pozwala nam rozpoznac, do którego biura nalezy
-(id w offices).
-
-Do stworzenia struktury firmy uzyj przykladowych danych z zmiennych offices i workers.
-*/
+// Funkcje użyte do zbudowania obiektu z powyższych danych:
 
 const company = {};
 
@@ -49,15 +91,17 @@ company.offices = offices.map(office => {
    }
 });
 
+// Funkcje do operacji potrzebnych w kolejnych zadaniach:
 
-const getOfficeInfo = company.offices
-    .map(office => {
-    return {
-       name: office.name,
-       workers: office.workers.length,
-       // average Salary
-   }
-});
+const getOfficeInfo = (id) => {
+    for (let i = 0; i < company.offices.length; i++) {
+        if (id === company.offices[i].id) {
+            console.log('City: ' + company.offices[i].name);
+            console.log('Number of workers: ' + company.offices[i].workers.length);
+            // Uzupełnić średnią pensję
+        }
+    };
+};
 
 const addNewOffice = (id, name, headquarter) => {
     company.offices.push({
@@ -68,7 +112,7 @@ const addNewOffice = (id, name, headquarter) => {
     });
 };
 
-const createNewWorker = (id, name, type, office, salary) => {
+const addNewWorker = (id, name, type, office, salary) => {
     let newWorker = {
         id: id,
         name: name,
@@ -76,18 +120,25 @@ const createNewWorker = (id, name, type, office, salary) => {
         office: office,
         salary: salary
     };
-    return newWorker;
+    for (let i = 0; i < company.offices.length; i++) {
+        if (newWorker.office === company.offices[i].id) {
+            company.offices[i].workers.push(newWorker);
+        }
+    };
 };
 
-//Uzywajac obiektu „Firma” wykonaj nastepujace operacje (w kolejnosci):
+// Rozwiązania zadań:
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
+
+getOfficeInfo('GL');
 
 // 2) Dodaj nowe biuro (w Poznaniu)
 
 addNewOffice('PO', 'Poznan', false);
+console.log(company.offices[3]);
 
 // 3) Dodaj nowego pracownika do biura w Poznaniu:
-// { id: 16, name: "Olek", type: "M", office: "PO", salary: 500 }
 
-company.offices[3].workers.push(createNewWorker(16, 'Olek', 'M', 'PO', 500));
+addNewWorker(16, 'Olek', 'M', 'PO', 500);
+console.log(company.offices[3].workers[0]);
