@@ -189,7 +189,56 @@ const getBestSalary = () => {
     return bestSalary
 };
 
-getBestSalary();
+/*
+const getBestWorker = () => {
+    let bestWorker = {};
+    for (let i = 0; i < company.offices.length; i++) {
+        let bestWorkerByOffice = {};
+        let bestSalaryByOffice = company.offices[i].workers[0].salary;
+        for (let j = 0; j < company.offices[i].workers; j++) {
+            if (company.offices[i].workers[j].salary > bestSalaryByOffice) {
+                Object.assign(bestWorkerByOffice, company.offices[i].workers[j]);
+                return bestWorkerByOffice;
+            }
+        }
+        Object.assign(bestWorkerByOffice, bestWorker)
+    }
+    return bestWorker
+};
+
+console.log(getBestWorker());
+*/
+
+const getBestWorkerName = () => {
+    let bestWorker;
+    for (let i = 0; i < company.offices.length; i++) {
+        let bestWorkerByOffice = company.offices[i].workers[0].name;
+        for (let j = 0; j < company.offices[i].workers; j++) {
+            if (company.offices[i].workers[j].salary === getBestSalary()) {
+                bestWorkerByOffice = company.offices[i].workers[j].name;
+            }
+        }
+        bestWorker = bestWorkerByOffice;
+    }
+    return bestWorker
+};
+
+const getBestWorkerByCity = (id) => {
+    let bestWorker;
+    for (let i = 0; i < company.offices.length; i++) {
+        if (id === company.offices[i].id) {
+            let bestWorkerByOffice = company.offices[i].workers[0].salary;
+            for (let j = 0; j < company.offices[i].workers; j++) {
+                if (company.offices[i].workers[j].salary > bestWorkerByOffice) {
+                    bestWorkerByOffice = company.offices[i].workers[j].salary;
+                }
+            }
+            bestWorker = bestWorkerByOffice;
+        }
+    }
+    return bestWorker
+};
+
 
 // ******************************Rozwiązania zadań***************************************
 
@@ -217,7 +266,12 @@ console.log(getAverageSalary());
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
 
-
+console.log(getBestWorkerByCity('GL'));
+console.log(getBestWorkerByCity('KO'));
+console.log(getBestWorkerByCity('GD'));
+console.log(getBestWorkerByCity('PO'));
 
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
+
+console.log(getBestWorkerName());
