@@ -68,21 +68,16 @@ const addNewWorker = (id, name, type, office, salary) => {
 const getOffice = (city) => company.offices.find(({name}) => name === city);
 
 // Liczenie średniej pensji dla danego biura:
+// (aby pominąć używanie pętli, posługujemy się funkcją getOffice, której przekazujemy parametr city)
 
 const getNumberOfWorkersByOffice = (city) => {return getOffice(city).workers.length};
-
-console.log(getNumberOfWorkersByOffice('Gliwice')); // 3 pracowników
 
 const getTotalSalaryByOffice = (city) => getOffice(city).workers
     .reduce((acc, next) => acc + next.salary, 0);
 
-console.log(getTotalSalaryByOffice('Gliwice')); // 720
-
 const getAverageSalaryByOffice = (city) => {
     return Math.round(getTotalSalaryByOffice(city) / getNumberOfWorkersByOffice(city))
 };
-
-console.log(getAverageSalaryByOffice('Gliwice')); // 720 / 3 = 240
 
 // Liczenie średniej pensji dla całej firmy:
 
@@ -94,8 +89,6 @@ const getNumberOfAllWorkers = () => {
     return numberOfWorkers;
 };
 
-console.log(getNumberOfAllWorkers()); //15
-
 const getTotalSalary = () => {
     let totalSalary = 0;
     for (let i = 0; i < company.offices.length; i++) {
@@ -104,47 +97,62 @@ const getTotalSalary = () => {
     return totalSalary;
 };
 
-console.log(getTotalSalary()); //3850
-
 const getAverageSalaryInCompany = () => {return Math.round(getTotalSalary() / getNumberOfAllWorkers())};
 
 // Wyświetalnie informacji o konkretnym biurze:
+//(kolejny raz z pomocą przychodzi funkcja getOffice)
 
 const getOfficeInfo = (city) => {
-    console.log('Miasto: ' + getOffice(city).name);
-    console.log('Pracownicy: ' + getOffice(city).workers.length);
-    console.log('Srednia pensja: ' + getAverageSalaryByOffice(city));
+    console.log('Miasto: ' + getOffice(city).name + ',' + ' Pracownicy: ' + getOffice(city).workers.length + ',' + ' Srednia pensja: ' + getAverageSalaryByOffice(city))
 };
 
 // Wyszukiwanie najlepiej opłacanych pracowników:
 
 const getTopWorkerByOffice = (city) => {
     let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
-        return next.salary - prev.salary
+        return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
     });
-    let topWorker = workersSortedBySalaries.slice(0, 1);
-    return console.log('Najlepiej zarabiajacy pracownik w ' + city + ' to ' + topWorker[0].name + '.');
+    let topWorker = workersSortedBySalaries.slice(0, 1); //zostawiamy tylko zarabiającego najlepiej (czyli tego na indeksie 0)
+    return console.log('Najlepiej zarabiajacy pracownik w ' + city + ' to ' + topWorker[0].name + '.'); //wynik to propercja .name pracownika na indeksie 0
+};
+
+const getTopWorkerInCompany = () => {
+    let topWorkers = [];
+  for (let i = 0; i < company.offices.length; i++) {
+      let workersSortedBySalaries = company.offices[i].workers.sort((prev, next) => {
+          return next.salary - prev.salary //sortujemy pracowników poszczególnych biur wg zarobków
+      });
+      let topWorkerByOffice = workersSortedBySalaries.slice(0, 1); //w każdym biurze zostawiamy tylko najlepszego pracownika (na indeksie 0)
+      topWorkers = topWorkers.concat(topWorkerByOffice); // łączymy uzyskane tablice i otrzymujemy tablicę najlepszych pracowników w poszczególnych biurach
+  }
+    let topWorker = topWorkers.sort((prev, next) => {
+      return next.salary - prev.salary //sortujemy tablicę najlepszych pracowników
+    });
+  topWorker = topWorker.slice(0, 1); //zostawiamy w tablicy tylko pierwszy obiekt (najlepszy pracownik na indeksie 0)
+    // poniżej wyszukujemy nazwę biura najlepszego pracownika, zestawiając id tego pracownika z id poszczególnych biur:
+    const checkOffice = (office) => {return office.id === topWorker[0].office};
+    const findTopWorkerOffice = company.offices.find(office => {return checkOffice(office)});
+    // biuro najlepszego pracownika to propercja .name wyniku z findTopWorkerOffice
+    return console.log('Najlepiej zarabiajacy pracownik w firmie to ' + topWorker[0].name + ' a jego biuro znajduje sie w ' + findTopWorkerOffice.name + '.');
 };
 
 // ******************************Rozwiązania zadań***************************************
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
 
-getOfficeInfo('Gliwice');
+getOfficeInfo('Gliwice'); //Miasto: Gliwice, Pracownicy: 3, Srednia pensja: 240
 
 // 2) Dodaj nowe biuro (w Poznaniu)
 
 addNewOffice('PO', 'Poznan', false);
-console.log(getOffice('Poznan'));
 
 // 3) Dodaj nowego pracownika do biura w Poznaniu:
 
 addNewWorker(16, 'Olek', 'M', 'PO', 500);
-console.log(getOffice('Poznan').workers[0]);
 
 // 4) Wyswietl, informacje o biurze w Poznaniu
 
-getOfficeInfo('Poznan');
+getOfficeInfo('Poznan'); //Miasto: Poznan, Pracownicy: 1, Srednia pensja: 500
 
 // 5) Wyswietl srednia pensje w calej firmie
 
@@ -160,5 +168,4 @@ getTopWorkerByOffice('Poznan'); //Olek
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
-
-
+getTopWorkerInCompany(); // Olek, Poznań
