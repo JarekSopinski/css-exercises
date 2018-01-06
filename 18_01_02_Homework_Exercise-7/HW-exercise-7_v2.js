@@ -116,6 +116,15 @@ const getOfficeInfo = (city) => {
     console.log('Srednia pensja: ' + getAverageSalaryByOffice(city));
 };
 
+// Wyszukiwanie najlepiej opłacanych pracowników:
+
+const getTopWorkerByOffice = (city) => {
+    let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
+        return next.salary - prev.salary
+    });
+    let topWorker = workersSortedBySalaries.slice(0, 1);
+    return console.log('Najlepiej zarabiajacy pracownik w ' + city + ' to ' + topWorker[0].name + '.');
+};
 
 // ******************************Rozwiązania zadań***************************************
 
@@ -142,6 +151,11 @@ getOfficeInfo('Poznan');
 console.log(getAverageSalaryInCompany()); //272
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
+
+getTopWorkerByOffice('Gdansk'); //Bartek
+getTopWorkerByOffice('Gliwice'); //Aleksander
+getTopWorkerByOffice('Koszalin'); //Damian
+getTopWorkerByOffice('Poznan'); //Olek
 
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
