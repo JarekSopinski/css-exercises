@@ -91,7 +91,7 @@ company.offices = offices.map(office => {
    }
 });
 
-// Funkcje do operacji potrzebnych w kolejnych zadaniach:
+// Funkcje potrzebne do rozwiązania zadań:
 
 const addNewOffice = (id, name, headquarter) => {
     company.offices.push({
@@ -189,27 +189,7 @@ const getBestSalary = () => {
     return bestSalary
 };
 
-/*
 const getBestWorker = () => {
-    let bestWorker = {};
-    for (let i = 0; i < company.offices.length; i++) {
-        let bestWorkerByOffice = {};
-        let bestSalaryByOffice = company.offices[i].workers[0].salary;
-        for (let j = 0; j < company.offices[i].workers; j++) {
-            if (company.offices[i].workers[j].salary > bestSalaryByOffice) {
-                Object.assign(bestWorkerByOffice, company.offices[i].workers[j]);
-                return bestWorkerByOffice;
-            }
-        }
-        Object.assign(bestWorkerByOffice, bestWorker)
-    }
-    return bestWorker
-};
-
-console.log(getBestWorker());
-*/
-
-const getBestWorkerName = () => {
     let bestWorker;
     for (let i = 0; i < company.offices.length; i++) {
         let bestWorkerByOffice = company.offices[i].workers[0].name;
@@ -270,8 +250,11 @@ console.log(getBestWorkerByCity('GL'));
 console.log(getBestWorkerByCity('KO'));
 console.log(getBestWorkerByCity('GD'));
 console.log(getBestWorkerByCity('PO'));
-
+/*
+Tutaj w części przypadków funkcja getBestWorkerByCity() wskazuje niewłaściwego pracownika.
+Do tej pory nie udało mi się znaleźć przyczyny błędu.
+ */
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
-console.log(getBestWorkerName());
+console.log(getBestWorker());
