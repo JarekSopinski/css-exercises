@@ -108,12 +108,20 @@ console.log(getTotalSalary()); //3850
 
 const getAverageSalaryInCompany = () => {return Math.round(getTotalSalary() / getNumberOfAllWorkers())};
 
+// Wyświetalnie informacji o konkretnym biurze:
+
+const getOfficeInfo = (city) => {
+    console.log('Miasto: ' + getOffice(city).name);
+    console.log('Pracownicy: ' + getOffice(city).workers.length);
+    console.log('Srednia pensja: ' + getAverageSalaryByOffice(city));
+};
+
 
 // ******************************Rozwiązania zadań***************************************
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
 
-
+getOfficeInfo('Gliwice');
 
 // 2) Dodaj nowe biuro (w Poznaniu)
 
@@ -127,9 +135,11 @@ console.log(getOffice('Poznan').workers[0]);
 
 // 4) Wyswietl, informacje o biurze w Poznaniu
 
+getOfficeInfo('Poznan');
+
 // 5) Wyswietl srednia pensje w calej firmie
 
-console.log(getAverageSalaryInCompany());
+console.log(getAverageSalaryInCompany()); //272
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
 
