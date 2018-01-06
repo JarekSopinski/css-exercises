@@ -9,4 +9,4 @@ I needed to review my knowledge of array methods to make a better second attempt
 
 ## HW-exercise-7_v2.js
 
-Second attempt
+Second attempt, based mainly on array methods. This solution works fine (or so it seems) and the code is shorter.

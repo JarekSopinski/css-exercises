@@ -167,10 +167,12 @@ const getAverageSalaryByOffice = (id) => {
 
 const getOfficeInfo = (id) => {
     for (let i = 0; i < company.offices.length; i++) {
-        if (id === company.offices[i].id) {
-            console.log('City: ' + company.offices[i].name);
-            console.log('Number of workers: ' + company.offices[i].workers.length);
-            console.log('Average salary: ' + getAverageSalaryByOffice(id));
+        if (id !== 'GD' && id !== 'GL' && id !== 'KO' && id !== 'PO') {
+            console.log('Nie ma takiego biura!');
+        } else if (id === company.offices[i].id) {
+            console.log('Miasto: ' + company.offices[i].name);
+            console.log('Liczba pracownikow: ' + company.offices[i].workers.length);
+            console.log('Srednia pensja: ' + getAverageSalaryByOffice(id));
         }
     }
 };

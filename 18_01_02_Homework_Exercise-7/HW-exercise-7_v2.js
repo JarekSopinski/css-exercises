@@ -37,7 +37,7 @@ company.offices = offices.map(office => {
     }
 });
 
-// Funkcje potrzebne do rozwiązania zadań:
+// Dodawanie nowych danych:
 
 const addNewOffice = (id, name, headquarter) => {
     company.offices.push({
@@ -63,6 +63,51 @@ const addNewWorker = (id, name, type, office, salary) => {
     }
 };
 
+// Dostęp do obiektu konkretnego biura:
+
+const getOffice = (city) => company.offices.find(({name}) => name === city);
+
+// Liczenie średniej pensji dla danego biura:
+
+const getNumberOfWorkersByOffice = (city) => {return getOffice(city).workers.length};
+
+console.log(getNumberOfWorkersByOffice('Gliwice')); // 3 pracowników
+
+const getTotalSalaryByOffice = (city) => getOffice(city).workers
+    .reduce((acc, next) => acc + next.salary, 0);
+
+console.log(getTotalSalaryByOffice('Gliwice')); // 720
+
+const getAverageSalaryByOffice = (city) => {
+    return Math.round(getTotalSalaryByOffice(city) / getNumberOfWorkersByOffice(city))
+};
+
+console.log(getAverageSalaryByOffice('Gliwice')); // 720 / 3 = 240
+
+// Liczenie średniej pensji dla całej firmy:
+
+const getNumberOfAllWorkers = () => {
+    let numberOfWorkers = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        numberOfWorkers += company.offices[i].workers.length;
+    }
+    return numberOfWorkers;
+};
+
+console.log(getNumberOfAllWorkers()); //15
+
+const getTotalSalary = () => {
+    let totalSalary = 0;
+    for (let i = 0; i < company.offices.length; i++) {
+        totalSalary += company.offices[i].workers.reduce((acc, next) => acc + next.salary, 0);
+        }
+    return totalSalary;
+};
+
+console.log(getTotalSalary()); //3850
+
+const getAverageSalaryInCompany = () => {return Math.round(getTotalSalary() / getNumberOfAllWorkers())};
+
 
 // ******************************Rozwiązania zadań***************************************
 
@@ -73,20 +118,18 @@ const addNewWorker = (id, name, type, office, salary) => {
 // 2) Dodaj nowe biuro (w Poznaniu)
 
 addNewOffice('PO', 'Poznan', false);
-console.log(company.offices[3]);
+console.log(getOffice('Poznan'));
 
 // 3) Dodaj nowego pracownika do biura w Poznaniu:
 
 addNewWorker(16, 'Olek', 'M', 'PO', 500);
-console.log(company.offices[3].workers[0]);
+console.log(getOffice('Poznan').workers[0]);
 
 // 4) Wyswietl, informacje o biurze w Poznaniu
 
-
-
 // 5) Wyswietl srednia pensje w calej firmie
 
-
+console.log(getAverageSalaryInCompany());
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
 
