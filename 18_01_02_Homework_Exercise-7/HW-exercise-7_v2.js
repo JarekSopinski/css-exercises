@@ -112,15 +112,14 @@ const getOfficeInfo = (city) => {
 
 // Wyszukiwanie najlepiej opłacanych pracowników:
 
-const getTopWorkerByOffice = (city) => {
+const topWorkerInOffice = (city) => {
     let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
         return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
     });
-    let topWorker = workersSortedBySalaries.slice(0, 1); //zostawiamy tylko zarabiającego najlepiej (czyli tego na indeksie 0)
-    return console.log('Najlepiej zarabiajacy pracownik w ' + city + ' to ' + topWorker[0].name + '.'); //wynik to propercja .name pracownika na indeksie 0
+    return workersSortedBySalaries[0]; //wynik to obiekt pracownika na indeksie 0
 };
 
-const getTopWorkerInCompany = () => {
+const topWorkerInCompany = () => {
     let topWorkers = [];
   for (let i = 0; i < company.offices.length; i++) {
       let workersSortedBySalaries = company.offices[i].workers.sort((prev, next) => {
@@ -129,15 +128,17 @@ const getTopWorkerInCompany = () => {
       let topWorkerByOffice = workersSortedBySalaries.slice(0, 1); //w każdym biurze zostawiamy tylko najlepszego pracownika (na indeksie 0)
       topWorkers = topWorkers.concat(topWorkerByOffice); // łączymy uzyskane tablice i otrzymujemy tablicę najlepszych pracowników w poszczególnych biurach
   }
-    let topWorker = topWorkers.sort((prev, next) => {
+    let topWorkersSortedBySalaries = topWorkers.sort((prev, next) => {
       return next.salary - prev.salary //sortujemy tablicę najlepszych pracowników
     });
-  topWorker = topWorker.slice(0, 1); //zostawiamy w tablicy tylko pierwszy obiekt (najlepszy pracownik na indeksie 0)
-    // poniżej wyszukujemy nazwę biura najlepszego pracownika, zestawiając id tego pracownika z id poszczególnych biur:
-    const checkOffice = (office) => {return office.id === topWorker[0].office};
+  return topWorkersSortedBySalaries[0]; // najlepiej zarabiający pracownik to obiekt na indeksie 0 posortowanej tablicy
+};
+
+const officeOfTopWorker = () => {
+    const checkOffice = (office) => {return office.id === topWorkerInCompany().office};
+    //wyszukujemy nazwę biura najlepszego pracownika, zestawiając id tego pracownika z id poszczególnych biur
     const findTopWorkerOffice = company.offices.find(office => {return checkOffice(office)});
-    // biuro najlepszego pracownika to propercja .name wyniku z findTopWorkerOffice
-    return console.log('Najlepiej zarabiajacy pracownik w firmie to ' + topWorker[0].name + ' a jego biuro znajduje sie w ' + findTopWorkerOffice.name + '.');
+    return findTopWorkerOffice.name //// nazwa biura najlepszego pracownika to propercja .name wyniku z findTopWorkerOffice
 };
 
 // ******************************Rozwiązania zadań***************************************
@@ -164,12 +165,12 @@ console.log(getAverageSalaryInCompany()); //272
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
 
-getTopWorkerByOffice('Gdansk'); //Bartek
-getTopWorkerByOffice('Gliwice'); //Aleksander
-getTopWorkerByOffice('Koszalin'); //Damian
-getTopWorkerByOffice('Poznan'); //Olek
-
+console.log(topWorkerInOffice('Gdansk')); //Bartek
+console.log(topWorkerInOffice('Gliwice')); //Aleksander
+console.log(topWorkerInOffice('Koszalin')); //Damian
+console.log(topWorkerInOffice('Poznan')); //Olek
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
-getTopWorkerInCompany(); // Olek, Poznań
+console.log(topWorkerInCompany());
+console.log(officeOfTopWorker());
