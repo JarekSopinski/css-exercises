@@ -103,7 +103,11 @@ const getAverageSalaryInCompany = () => {return Math.round(getTotalSalary() / ge
 //(kolejny raz z pomocą przychodzi funkcja getOffice)
 
 const getOfficeInfo = (city) => {
-    console.log('Miasto: ' + getOffice(city).name + ',' + ' Pracownicy: ' + getOffice(city).workers.length + ',' + ' Srednia pensja: ' + getAverageSalaryByOffice(city))
+    return {
+        Localization: getOffice(city).name,
+        NumberOfWorkers: getNumberOfWorkersByOffice(city),
+        AverageSalary: getAverageSalaryByOffice(city)
+    }
 };
 
 // Wyszukiwanie najlepiej opłacanych pracowników:
@@ -140,7 +144,7 @@ const getTopWorkerInCompany = () => {
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
 
-getOfficeInfo('Gliwice'); //Miasto: Gliwice, Pracownicy: 3, Srednia pensja: 240
+console.log(getOfficeInfo('Gliwice')); //Miasto: Gliwice, Pracownicy: 3, Srednia pensja: 240
 
 // 2) Dodaj nowe biuro (w Poznaniu)
 
@@ -152,7 +156,7 @@ addNewWorker(16, 'Olek', 'M', 'PO', 500);
 
 // 4) Wyswietl, informacje o biurze w Poznaniu
 
-getOfficeInfo('Poznan'); //Miasto: Poznan, Pracownicy: 1, Srednia pensja: 500
+console.log(getOfficeInfo('Poznan')); //Miasto: Poznan, Pracownicy: 1, Srednia pensja: 500
 
 // 5) Wyswietl srednia pensje w calej firmie
 
