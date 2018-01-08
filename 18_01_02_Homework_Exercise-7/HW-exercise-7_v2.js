@@ -118,11 +118,16 @@ const topWorkersInOffice = (city) => {
         return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
     });
     let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
-    return workersSortedBySalaries.filter(worker => {
+    let topWorkers = workersSortedBySalaries.filter(worker => {
             return worker.salary === topWorker.salary;
-        // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki
-        // jak ten najlepszy na indeksie 0. Jeżeli nie ma on 'konkurencji', funkcja zwróci tylko jeden obiekt.
+        // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki jak ten najlepszy na indeksie 0.
         });
+    // jeżeli mamy tylko jednego najlepszego pracownika, tablica przestaje być potrzebna i możemy wydobyć z niej obiekt:
+    if (topWorkers.length === 1) {
+        return topWorkers[0]
+    } else {
+        return topWorkers
+    }
 };
 
 const topWorkerInCompany = () => {
@@ -198,17 +203,12 @@ const topWorkersInCompany = () => {
             return next.salary - prev.salary //sortujemy pracowników poszczególnych biur wg zarobków
         });
         let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
-        if (workersSortedBySalaries.length === 1) {
-            topWorkers = topWorkers.concat(topWorker);
-            // sprawdzamy, czy jest tylko jeden pracownik z najw. pensją
-        } else {
-            let topWorkersInOffice = workersSortedBySalaries.filter(worker => {
+        let topWorkersInOffice = workersSortedBySalaries.filter(worker => {
                 return worker.salary === topWorker.salary;
                 // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki jak ten najlepszy na indeksie 0
             });
-            topWorkers = topWorkers.concat(topWorkersInOffice);
+        topWorkers = topWorkers.concat(topWorkersInOffice);
         }
-    }
     //wyjście z pętli
     let topWorkersSortedBySalaries = topWorkers.sort((prev, next) => {
         return next.salary - prev.salary //sortujemy tablicę najlepszych pracowników
