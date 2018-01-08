@@ -174,3 +174,37 @@ console.log(topWorkerInOffice('Poznan')); //Olek
 
 console.log(topWorkerInCompany());
 console.log(officeOfTopWorker());
+
+//***************************Bonus**************************************************
+
+/*
+Poniżej modyfikuję funkcje do wyszukiwania najlepiej zarabiających pracowników tak, aby działały poprawnie
+w sytuacji, gdy w danym biurze lub całej firmie jest dwóch lub więcej pracowników z takimi samymi najwyższymi
+pensjami. W tej sytuacji funkcje mają oczywiście zwracać nie jeden obiekt (jak wyżej), ale tablicę obiektów.
+Aby móc przeprowadzić testy, najpierw dodaję nowych pracowników z najwyższymi zarobkami.
+ */
+
+addNewWorker(17, 'Janusz', 'M', 'GD', 300); // teraz Gdańsk ma dwóch pracowników z takimi samymi najw. zarobkami
+
+const topWorkersInOffice = (city) => {
+    let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
+        return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
+    });
+    let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
+    if (workersSortedBySalaries.length === 1) {
+        return topWorker;
+        // sprawdzamy, czy jest tylko jeden pracownik z najw. pensją
+    } else {
+        let topWorkers = workersSortedBySalaries.filter(worker => {
+            return worker.salary === topWorker.salary;
+            // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki jak ten najlepszy na indeksie 0
+        });
+        return topWorkers;
+    }
+};
+
+console.log(topWorkersInOffice('Gdansk')); // wynik to tablica z Bartkiem i Januszem, którzy mają takie same zarobki (300)
+
+
+
+
