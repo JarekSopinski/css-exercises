@@ -111,12 +111,18 @@ const getOfficeInfo = (city) => {
 };
 
 // Wyszukiwanie najlepiej opłacanych pracowników:
+//(W Koszalinie jest trzech z takimi samymi najwyższymi pensjami, a zatem funkcja musi brać to pod uwagę)
 
-const topWorkerInOffice = (city) => {
+const topWorkersInOffice = (city) => {
     let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
         return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
     });
-    return workersSortedBySalaries[0]; //wynik to obiekt pracownika na indeksie 0
+    let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
+    return workersSortedBySalaries.filter(worker => {
+            return worker.salary === topWorker.salary;
+        // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki
+        // jak ten najlepszy na indeksie 0. Jeżeli nie ma on 'konkurencji', funkcja zwróci tylko jeden obiekt.
+        });
 };
 
 const topWorkerInCompany = () => {
@@ -165,10 +171,10 @@ console.log(getAverageSalaryInCompany()); //272
 
 //6) Wyswietl najlepiej oplacanego pracownika w poszczególnych biurach
 
-console.log(topWorkerInOffice('Gdansk')); //Bartek
-console.log(topWorkerInOffice('Gliwice')); //Aleksander
-console.log(topWorkerInOffice('Koszalin')); //Damian
-console.log(topWorkerInOffice('Poznan')); //Olek
+console.log(topWorkersInOffice('Gdansk')); //Bartek
+console.log(topWorkersInOffice('Gliwice')); //Aleksander
+console.log(topWorkersInOffice('Koszalin')); //Damian, Alina, Krzysztof
+console.log(topWorkersInOffice('Poznan')); //Olek
 
 // 7) Wyswietl najlepiej oplacanego pracownika w calej firmie oraz nazwe jego biura.
 
@@ -178,33 +184,41 @@ console.log(officeOfTopWorker());
 //***************************Bonus**************************************************
 
 /*
-Poniżej modyfikuję funkcje do wyszukiwania najlepiej zarabiających pracowników tak, aby działały poprawnie
-w sytuacji, gdy w danym biurze lub całej firmie jest dwóch lub więcej pracowników z takimi samymi najwyższymi
-pensjami. W tej sytuacji funkcje mają oczywiście zwracać nie jeden obiekt (jak wyżej), ale tablicę obiektów.
-Aby móc przeprowadzić testy, najpierw dodaję nowych pracowników z najwyższymi zarobkami.
+Poniżej modyfikuję funkcję do wyszukiwania najlepiej zarabiającego pracownika w całej firmie tak, aby działała
+w sytuacji, gdy w całej firmie jest dwóch lub więcej pracowników z takimi samymi najwyższymi pensjami.
+Na potrzeby testu zmniejszam zarobki Olka (Poznań, 500) do 300, tak aby mógł 'rywalizować' z Bartkiem (Gdańsk, 300)
  */
 
-addNewWorker(17, 'Janusz', 'M', 'GD', 300); // teraz Gdańsk ma dwóch pracowników z takimi samymi najw. zarobkami
+topWorkersInOffice('Poznan').salary = 300;
 
-const topWorkersInOffice = (city) => {
-    let workersSortedBySalaries = getOffice(city).workers.sort((prev, next) => {
-        return next.salary - prev.salary //sortujemy pracowników biura wg zarobków
+const topWorkersInCompany = () => {
+    let topWorkers = [];
+    for (let i = 0; i < company.offices.length; i++) {
+        let workersSortedBySalaries = company.offices[i].workers.sort((prev, next) => {
+            return next.salary - prev.salary //sortujemy pracowników poszczególnych biur wg zarobków
+        });
+        let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
+        if (workersSortedBySalaries.length === 1) {
+            topWorkers = topWorkers.concat(topWorker);
+            // sprawdzamy, czy jest tylko jeden pracownik z najw. pensją
+        } else {
+            let topWorkersInOffice = workersSortedBySalaries.filter(worker => {
+                return worker.salary === topWorker.salary;
+                // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki jak ten najlepszy na indeksie 0
+            });
+            topWorkers = topWorkers.concat(topWorkersInOffice);
+        }
+    }
+    //wyjście z pętli
+    let topWorkersSortedBySalaries = topWorkers.sort((prev, next) => {
+        return next.salary - prev.salary //sortujemy tablicę najlepszych pracowników
     });
-    let topWorker = workersSortedBySalaries[0]; // najlepiej zarab. pracownik to pracownik na indeksie 0
-    if (workersSortedBySalaries.length === 1) {
-        return topWorker;
-        // sprawdzamy, czy jest tylko jeden pracownik z najw. pensją
-    } else {
-        let topWorkers = workersSortedBySalaries.filter(worker => {
-            return worker.salary === topWorker.salary;
+    let topWorkerInCompany = topWorkersSortedBySalaries[0]; // najlepszy pracownik to ten na indeksie 0
+    let workersWithBestSalaries = topWorkersSortedBySalaries.filter(worker => {
+            return worker.salary === topWorkerInCompany.salary;
             // filtrujemy tablicę i pozostawiamy tylko pracowników, którzy mają takie zarobki jak ten najlepszy na indeksie 0
         });
-        return topWorkers;
-    }
+    return workersWithBestSalaries;
 };
 
-console.log(topWorkersInOffice('Gdansk')); // wynik to tablica z Bartkiem i Januszem, którzy mają takie same zarobki (300)
-
-
-
-
+console.log(topWorkersInCompany()); // Bartek (Gdańsk, 300) i Olek (Poznań, 300)
