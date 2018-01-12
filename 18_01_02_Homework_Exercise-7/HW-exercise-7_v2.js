@@ -152,6 +152,7 @@ const officeOfTopWorker = () => {
     return findTopWorkerOffice.name //// nazwa biura najlepszego pracownika to propercja .name wyniku z findTopWorkerOffice
 };
 
+
 // ******************************Rozwiązania zadań***************************************
 
 // 1) Wyswietl, informacje o biurze w Gliwicach (lokalizacja, liczba przypisanych pracowników, srednia pensja),
@@ -192,7 +193,8 @@ console.log(officeOfTopWorker());
 Poniżej modyfikuję funkcję do wyszukiwania najlepiej zarabiającego pracownika w całej firmie tak, aby działała
 w sytuacji, gdy w całej firmie jest dwóch lub więcej pracowników z takimi samymi najwyższymi pensjami.
 Na potrzeby testu zmniejszam zarobki Olka (Poznań, 500) do 300, tak aby mógł 'rywalizować' z Bartkiem (Gdańsk, 300)
- */
+*/
+
 
 topWorkersInOffice('Poznan').salary = 300;
 
