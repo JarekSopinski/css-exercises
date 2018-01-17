@@ -1,30 +1,37 @@
-var names = ['Janek', 'Bolek', 'Rysiu'];
+let names = ['Janek', 'Bolek', 'Rysiu'];
 
 // 1. TODO. Do tablicy names dodaj parę imion na koniec tablicy
 
+names.push('Adam', 'Tomek');
 
-names.push('Brajan', 'Dżesika');
-
+console.log(names);
 
 // 2. TODO. Z tablicy names usuń imię z końca tablicy
 
 names.pop();
+console.log(names);
 
 // 3. TODO. Z tablicy names usuń imię z początku tablicy
 
 names.shift();
-
+console.log(names);
 
 // 4. TODO. Do tablicy names dodaj parę imion na początek tablicy
 
-names.unshift('Janusz', 'Bożena');
+names.unshift('Carl', 'Neal');
+console.log(names);
+
 
 // 5. TODO: Do tablicy names, dołącz tablicę englishNames (zmodyfikuj)
-var englishNames = ['Monica', 'Jessica', 'John'];
+
+const englishNames = ['Monica', 'Jessica', 'John'];
 
 names = names.concat(englishNames);
+console.log(names);
 
 // 6. TODO: Skopiuj tablicę names bez referencji
 
-var copiedNames = [...names]; // kopiowanie bez referencji powoduje, że zmiany skopiowanej tablicy nie modyfikują już pierwszej tablicy,
-// obie tablice nie są już ze sobą powiązane.
+let copiedNames = [...names];
+copiedNames.push('Vader');
+console.log(copiedNames);
+console.log(names);

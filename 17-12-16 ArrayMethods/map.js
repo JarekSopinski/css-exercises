@@ -1,18 +1,16 @@
 // 1. TODO: Zmapuj tablicę countries tak, aby zwrócić tablicę samych nazw krajów
 
-var countriesNames = countries.map(function(country) {
-    return country.name;
-}); //ES5
-
-const countriesNames6 = countries.map((country) => country.name); // ES6
+const getCountriesNames = countries.map(country => {return country.name});
 
 // 2. TODO: Zmapuj tablicę countries, oczekiwany string w tablicy wynikowej:
 // "NAME ma powierzchnię AREA km2 a populacja wynosi POPULATION ludzi"
 // Przykład: "Afganistan ma powierzchnię 652230 km2 a populacja wynosi 27657145 ludzi"
 
+const getCountriesArea = countries.map(country => {return country.area});
+const getCountriesPopulation = countries.map(country => {return country.population});
 
-var countryDescription = countries.map(function (country){
-   return country.name + ' ma powierzchnię ' + country.area + ' km2 a populacja wynosi ' + country.population + ' ludzi.';
+const getCountryInfo = countries.map(country => {
+    return country.name + ' ma powierzchnie ' + country.area + ' km2 a populacja wynosi ' + country.population + ' ludzi.'
 });
 
 
@@ -30,19 +28,19 @@ var countryDescription = countries.map(function (country){
 }
 */
 
-var countryInfo = countries.map(function (country) {
+const getCountryDetails = countries.map(country => {
     return {
         kraj: country.name.toUpperCase(),
-        stolica: country.capital.toUpperCase(),
-        region: country.region.toUpperCase(),
-        sasiedzi: country.borders.length > 0 ? country.borders.join(' ') : 'BRAK', // tenary operator
-        strefaCzasowa: 'Strefa czasowa ' + country.timezones.join(),
+        stolica: country.capital,
+        region: country.region,
+        sasiedzi: country.borders.length > 0 ? country.borders.join(' ') : 'BRAK',
+        domena: country.topLevelDomain.join(),
+        strefaCzasowa: country.timezones.join(),
         numerKierunkowy: country.callingCodes.join()
     }
-
 });
 
-console.log(countryInfo);
-console.log(countryInfo[0]); // są sąsiedzi
-console.log(countryInfo[0]); // nie ma sąsiadów
+
+
+
 
