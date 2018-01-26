@@ -1,0 +1,86 @@
+1. zainsteluj node.js https://nodejs.org/en/
+
+2. cmd -> node -v
+3. cmd -> npm -v
+
+4. cmd -> npm init
+
+name: (project-name) project-name
+version: (0.0.0) 0.0.1
+description: The Project Description
+entry point: //leave empty
+test command: //leave empty
+git repository: //the repositories url
+keywords: //leave empty
+author: // your name
+license: N/A
+
+wynik: package.json podobny do:
+{
+  "name": "project-name",
+  "version": "0.0.1",
+  "description": "Project Description",
+  "main": "index.js",
+  "scripts": {
+    "test":
+  },
+  "repository": {
+    "type": "git",
+    "url": "the repositories url"
+  },
+  "author": "your name",
+  "license": "N/A"
+}
+
+5. instalujemy webpack:
+cmd -> npm install webpack
+
+6. tworzymy plik webpack.config.js:
+
+const path = require('path');
+module.exports = {
+    entry: './js/main.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
+    },
+    // tu dodamy module
+};
+
+7. instalujemy del-cli
+cmd -> npm install del-cli
+
+8. istalujemy babel
+cmd -> npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+
+9. tworzymy plik .babelrc:
+{
+    "presets": ["env"]
+}
+
+do pliku package.json dodajemy scripts:
+"prebuild": "del-cli dist -f",
+"build": "webpack",
+"start": "npm run build"
+
+10. do webpack.config.js dodajemy:
+module: {
+        rules: [
+          {
+            test: /\.(js)$/,
+            exclude: /node_modules/,
+            use: [
+              'babel-loader',
+            ],
+          },
+        ],
+    }
+
+11. Zainstaluj babel-minify ( https://www.npmjs.com/package/babel-minify )
+
+npm install babel-minify --save-dev
+
+12. Dodaj skrypt w package.json:
+"buildmin": "minify input.js --out-file output.min.js"
+
+(pod input i output odpowiednie ścieżki w '')
