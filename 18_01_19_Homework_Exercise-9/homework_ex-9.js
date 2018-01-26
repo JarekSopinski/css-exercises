@@ -31,8 +31,8 @@ const users = [
 
 const $table = $('<table class="table table-dark">').appendTo('main');
 
-const addUsersToRows = () => {
-    return users.map(user => {
+const addUsersToRows = (array) => {
+    return array.map(user => {
         return $(`
         <tr>
             <td><input type="checkbox" class="user-info"></td>
@@ -47,13 +47,13 @@ const addUsersToRows = () => {
     })
 };
 
-$table.append(addUsersToRows());
+$table.append(addUsersToRows(users));
 
 // Dodanie checkboxa wyświetlającego ID danego użytkownika:
 
 const $userInfoChbx = $('.user-info');
 
-$userInfoChbx.on('click', function () {
+$(document).on('click', 'tr', function () {
     const parentRow = $(this).closest('tr');
     const thisId = parentRow.find('.id');
     console.log(thisId.text());
@@ -61,11 +61,11 @@ $userInfoChbx.on('click', function () {
 
 // Dodanie X z klasą remove-icon, który usuwa dany rząd:
 
-const $removeButton = $('.remove-icon');
+const deleteUser = function() {
+    $(this).closest('tr').remove()
+};
 
-$removeButton.on('click', function () {
-    $(this).closest('tr').css('display', 'none')
-});
+$(document).on('click', '.remove-icon', deleteUser);
 
 // Dodanie klasy table-row:
 
@@ -83,21 +83,19 @@ function toggleHighlight() {
     $(this).toggleClass('active')
 }
 
-$tableRow.on('mouseenter', toggleHighlight);
-$tableRow.on('mouseleave', toggleHighlight);
+$(document).on('mouseenter', 'tr', toggleHighlight);
+$(document).on('mouseleave', 'tr', toggleHighlight);
 
 // Budowa formularza, który dodaje nowego usera:
 
 const $newUserForm = $('<div id="newUserForm" style="padding: 50px 0"></div>');
 $newUserForm.prependTo('main');
 
-const $newUserId = $('<input class="id" placeholder="Input your ID">');
 const $newUserFirstName = $('<input class="firstName" placeholder="Input your first name">');
 const $newUserLastName = $('<input class="lastName" placeholder="Input your last name">');
 const $newUserAge = $('<input class="age" placeholder="Input your age">');
 const $newUserSendBtn = $('<button class="btn btn-primary" disabled>Submit</button>');
 
-$newUserId.appendTo($newUserForm);
 $newUserFirstName.appendTo($newUserForm);
 $newUserLastName.appendTo($newUserForm);
 $newUserAge.appendTo($newUserForm);
@@ -135,7 +133,7 @@ $newUserAge.on('keyup', toggleNewUserBtnDisability);
 // Dodawanie nowego użytkownika za pomocą danych wprowadzonych do formularza:
 
 $newUserSendBtn.on('click', function () {
-    const id = $newUserId.val();
+    const id = users.length + 1;
     const city = $newUserCity.val();
     const firstName = $newUserFirstName.val();
     const lastName = $newUserLastName.val();
@@ -143,18 +141,7 @@ $newUserSendBtn.on('click', function () {
 
     const newUser = {id: id, firstName: firstName, lastName: lastName, age: age, city: city};
 
-    const addNewUser = () => {
-        return $(`
-        <tr>
-            <td><input type="checkbox" class="user-info"></td>
-            <td class="id">${newUser.id}</td>
-            <td class="firstName">${newUser.firstName}</td>
-            <td class="lastName">${newUser.lastName}</td>
-            <td class="age">${newUser.age}</td>
-            <td class="city">${newUser.city}</td>
-            <td><button class="remove-icon" style="cursor: pointer">X</button></td>
-        </tr>
-        `)};
+    users.push(newUser);
 
-    $table.append(addNewUser());
+    $table.append(addUsersToRows(users.slice(users.length - 1)));
 });
