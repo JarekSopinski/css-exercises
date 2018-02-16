@@ -3,7 +3,8 @@ import React from 'react';
 export default class extends React.Component {
     render() {
         return <React.Fragment>
-            <p>AddTodo</p>
+            <input type="text"/>
+            <button>Add new task</button>
         </React.Fragment>
     }
 }
