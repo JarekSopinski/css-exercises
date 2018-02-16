@@ -11,17 +11,17 @@ export default class extends React.Component {
 
     render() {
         return <React.Fragment>
-            <ul>
+            <ol>
                 {
                     this.props.todos.map((todo, id) =>
                         <li
                             key={id}
                             style={this.crossOutIfFinished(id)}>
                             {todo.name}
-                            </li>
+                        </li>
                     )
                 }
-            </ul>
+            </ol>
         </React.Fragment>
     }
 }

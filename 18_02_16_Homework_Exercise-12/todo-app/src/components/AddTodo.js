@@ -6,15 +6,16 @@ export default class extends React.Component {
         super(props);
         this.state = {
             inputValue: '',
-
         }
     }
 
-
     render() {
+        const onAdded = this.props.onAdded;
+        const updatedInputValue = this.state.inputValue;
+
         return <React.Fragment>
-            <input type="text" value={this.state.inputValue} onChange={this.changeInputValue.bind(this)}/>
-            <button>Add new task</button>
+            <input type="text" onChange={this.changeInputValue.bind(this)}/>
+            <button onClick={() => onAdded(updatedInputValue)}>Add new task</button>
         </React.Fragment>
     }
 
