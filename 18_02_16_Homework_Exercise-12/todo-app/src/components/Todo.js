@@ -16,11 +16,20 @@ export default class extends React.Component {
         }
     }
 
+    crossOutIfFinished(id) {
+        const isFinished = this.state.todos[id].isFinished;
+        return {
+            textDecoration: isFinished ? 'line-through' : 'none'
+        }
+    }
+
     render() {
         return <React.Fragment>
-            {this.state.todos.map((todo, id) =>
-            <li key={id}>{todo.name}</li>
-            )}
+            <ol>
+                {this.state.todos.map((todo, id) =>
+                    <li key={id} style={this.crossOutIfFinished(id)}>{todo.name}</li>
+                )}
+            </ol>
         </React.Fragment>
     }
 }
