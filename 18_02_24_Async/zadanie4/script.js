@@ -32,6 +32,9 @@ $submitBtn.on('click', function (e) {
         category: category
     };
 
+    localStorage.setItem('questionBody', JSON.stringify(newQuestion));
+    // zapisanie pytania w local storage
+
     console.log(newQuestion);
 
     fetch(url, {
@@ -43,7 +46,10 @@ $submitBtn.on('click', function (e) {
     })
         .then(res => res.json())
         .catch(error => $postMessage.text('Nie udało się wysłać pytania!'))
-        .then(response => $postMessage.text('Pomyślnie wysłano pytanie'));
+        // catch nie przerywa łańcucha promisów!
+        .then(response => $postMessage.text('Pomyślnie wysłano pytanie'))
+        //.then(localStorage.setItem('myKey', 'Test local storage'))
+        .then(console.log(localStorage.getItem('questionBody')))
 
 });
 
@@ -59,7 +65,7 @@ const postQuestion = (body) => {
 const sendQuestion = (e) => {
     e.preventDefault();
 
-    body = {
+    const body = {
         question: $questionBody.value,
         level: $questionLevel.value,
         category: $questionCategory.value
