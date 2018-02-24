@@ -3,10 +3,12 @@
 
 const $timer = $('#timer');
 
-const displayDate = setInterval(function () {
+const getCurrentDate = () => {
     const currentDate = new Date();
     $timer.text(currentDate)
-},1000);
+};
+
+const displayDate = setInterval(getCurrentDate, 1000);
 
 /* TODO:2.b) za pomocą funkcji clearInterval, czyść zegar z czasu na kliknięcie stworzonego przycisku */
 
