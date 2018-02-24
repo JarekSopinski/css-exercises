@@ -20,6 +20,21 @@ const displayQuestions = questions => {
     table.innerHTML = rows;
 };
 
+
 /* TODO:3.b Po pobraniu danych, zmień kolor tła strony na żółty */
 /* TODO:3.c Po pobraniu danych, przypisz je do poniższej zmiennej o nazwie questions */
-let questions;
+
+let questionsList;
+
+
+fetch('https://api.fefaq.pl/questions')
+    .then(response => response.json()) // trzeba sparsować odpowiedź
+    .then(questions => {
+        displayQuestions(questions);
+        $('body').css('background', 'yellow');
+        questionsList = questions
+    });
+
+
+
+
